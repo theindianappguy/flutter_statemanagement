@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ChangeNotifierProvider<Counter>(
-        create: (context) => Counter(),
+      home: ChangeNotifierProvider</*Counter*/ValueNotifier<int>>(
+        create: (context) => /*Counter()*/ValueNotifier<int>(0),
         child: MyHomePage(title: 'Flutter Demo Home Page'),
       ),
     );
@@ -33,7 +33,8 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     //final counter = Provider.of<Counter>(context);
-    final counter = Provider.of<Counter>(context, listen: false);
+    //final counter = Provider.of<Counter>(context, listen: false);
+    final counter = Provider.of<ValueNotifier<int>>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -50,7 +51,7 @@ class MyHomePage extends StatelessWidget {
             Text(
               'You have pushed the button ${counter.value} times:',
             ),
-            Consumer<Counter>(
+            Consumer<ValueNotifier<int>>(
               builder: (context, counter, child) => Text(
                 '${counter.value}',
                 style: Theme.of(context).textTheme.headline4,
@@ -60,7 +61,8 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: counter.increment,
+       // onPressed: counter.increment,
+        onPressed: () => counter.value++,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
